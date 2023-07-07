@@ -81,6 +81,6 @@ export const  loginUser =expressAsyncHandler(async (req,res) =>{
 //@route  GET api/users/current
 //@access private
 export const getCurrent =expressAsyncHandler(async (req,res) =>{
-    res.json({message : "Curent user information"});
+    res.json(req.user);
 })
 
