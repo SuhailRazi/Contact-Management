@@ -57,6 +57,11 @@ export const updateContact = expressAsyncHandler (async (req, res) => {
         res.status(404);
         throw new Error("Contact Not Found");
     }
+    if(contact.user_id.toString() !== req.user.id){
+        res.status(403);
+        throw new Error("User dont have permission t0 update other user contact")
+    }
+
     const updatedContact = await Contact.findByIdAndUpdate(
         req.params.id,
         req.body,
@@ -73,6 +78,10 @@ export const deleteContact = expressAsyncHandler (async (req, res) => {
     const contact = await Contact.findById(req.params.id);
     if(!contact){
         res.status(400).json("Cannot delete");
+    }
+    if(contact.user_id.toString() !== req.user.id){
+        res.status(403);
+        throw new Error("User des not have the access to delete other user contact");
     }
     await Contact.deleteOne({_id : req.params.id});
     res.status(200).json(contact + "Removed");
