@@ -67,7 +67,7 @@ export const  loginUser =expressAsyncHandler(async (req,res) =>{
             },
         },
         process.env.ACCESS_TOKEN_SECRET,
-        {expiresIn : "1m"}
+        {expiresIn : "45m"}
         );
         res.status(200).json({accesToken})
     }else{

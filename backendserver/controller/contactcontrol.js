@@ -3,17 +3,17 @@ import Contact from "../models/contactModel.js";
 
 //@desc GET ALL contacts
 //@route GET  /api/contacts
-//@access public
+//@access private
 
 
 export const getContacts = expressAsyncHandler(async (req, res) => {
-    const contacts = await Contact.find();
+    const contacts = await Contact.find({user_id : req.user.id});
     res.status(200).json(contacts);
 })
 
 //@desc Create new contact
 //@route POST /api/contact
-//acces public
+//acces private
 
 export const  createContact = expressAsyncHandler(async (req, res) => {
     console.log("The request is ", req.body);
@@ -27,6 +27,7 @@ export const  createContact = expressAsyncHandler(async (req, res) => {
         name,
         email,
         phone,
+        user_id : req.user.id
     });
     
     res.status(201).json(contact);
@@ -34,7 +35,7 @@ export const  createContact = expressAsyncHandler(async (req, res) => {
 
 //@desc get one contact
 //@route get /api/contact/:id
-//acces public
+//acces private
 
 export const  getContact = expressAsyncHandler (async (req, res) => {
     const contact = await Contact.findById(req.params.id);
@@ -48,7 +49,7 @@ export const  getContact = expressAsyncHandler (async (req, res) => {
 
 //@desc update contact
 //@route get /api/contact/:id
-//acces public
+//acces private
 
 export const updateContact = expressAsyncHandler (async (req, res) => {
     const contact = await Contact.findById(req.params.id);
@@ -66,7 +67,7 @@ export const updateContact = expressAsyncHandler (async (req, res) => {
 
 //@desc delete contact
 //@route delete /api/contact/:id
-//acces public
+//acces private
 
 export const deleteContact = expressAsyncHandler (async (req, res) => {
     const contact = await Contact.findById(req.params.id);
